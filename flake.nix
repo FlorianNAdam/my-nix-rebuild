@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    nixosPath.default = "~/my-nixos";
   };
 
   outputs = { self, nixpkgs }: let
@@ -15,21 +14,28 @@
         my-nix-rebuild = pkgs.writeShellScriptBin "my-nix-rebuild" ''
           #!/usr/bin/env bash
 
-          # Usage: ./update-and-commit.sh <label>
+          # Usage: ./update-and-commit.sh <path> <label>
 
-          LABEL=$1
+          NIXOS_PATH=$1          
 
-          if [ -z "$LABEL" ]; then
+          if [ -z "$NIXOS_PATH" ]; then
+            echo "You must specify a path!"
+            exit 1
+          fi
+
+          NIXOS_LABEL=$2
+
+          if [ -z "$NIXOS_LABEL" ]; then
             echo "You must specify a label!"
             exit 1
           fi
           
           set -e
 
-          cd $nixosPath
-          git commit -a -m "$LABEL"
+          cd $NIXOS_PATH
+          git commit -a -m "$NIXOS_LABEL"
           git push
-          sudo NIXOS_LABEL="$LABEL" nixos-rebuild switch --flake $nixosPath
+          sudo NIXOS_LABEL="$NIXOS_LABEL" nixos-rebuild switch --flake $NIXOS_PATH
         '';
       };
     };
