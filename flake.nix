@@ -23,19 +23,21 @@
             exit 1
           fi
 
-          NIXOS_LABEL=$2
+          LABEL=$2
 
-          if [ -z "$NIXOS_LABEL" ]; then
+          if [ -z "$LABEL" ]; then
             echo "You must specify a label!"
             exit 1
           fi
           
           set -e
 
+          echo ">>>" $LABEL "<<<"
+
           cd $NIXOS_PATH
-          git commit -a -m "$NIXOS_LABEL"
+          git commit -a -m "$LABEL"
           git push
-          sudo NIXOS_LABEL="$NIXOS_LABEL" nixos-rebuild switch --flake $NIXOS_PATH
+          sudo NIXOS_LABEL="$LABEL" nixos-rebuild switch --flake $NIXOS_PATH
         '';
       };
     };
