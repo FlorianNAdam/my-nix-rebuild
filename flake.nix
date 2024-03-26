@@ -11,7 +11,7 @@
   in {
     packages = {
       x86_64-linux = {
-        my-command = pkgs.writeShellScriptBin "my-command" ''
+        my-nix-rebuild = pkgs.writeShellScriptBin "my-nix-rebuild" ''
           #!/usr/bin/env bash
 
           # Usage: ./update-and-commit.sh <label>
