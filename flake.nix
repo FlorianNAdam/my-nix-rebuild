@@ -37,7 +37,7 @@
           cd $NIXOS_PATH
           git commit -a -m "$LABEL"
           git push
-          sudo NIXOS_LABEL="$LABEL" nixos-rebuild switch --flake $NIXOS_PATH
+          sudo NIXOS_LABEL="$LABEL" nixos-rebuild switch --impure --flake $NIXOS_PATH
         '';
       };
     };
