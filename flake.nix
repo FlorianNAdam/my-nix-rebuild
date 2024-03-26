@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    nixosPath.default = "~/my-nixos"
+    nixosPath.default = "~/my-nixos";
   };
 
   outputs = { self, nixpkgs }: let
