@@ -31,13 +31,18 @@
 
             set -e
 
+            # create bootloader compatible label
+            SANITIZED_LABEL=$(echo "$LABEL" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9:_\.-]//g')
+
+            # check if rebuild will work
+            sudo NIXOS_LABEL="$SANITIZED_LABEL" nixos-rebuild dry-activate --impure --flake $NIXOS_PATH
+
             # sync git repo
             cd $NIXOS_PATH
             git commit -a -m "$LABEL"
             git push
 
             # rebuild system
-            SANITIZED_LABEL=$(echo "$LABEL" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9:_\.-]//g')
             sudo NIXOS_LABEL="$SANITIZED_LABEL" nixos-rebuild switch --impure --flake $NIXOS_PATH
           '';
         };
