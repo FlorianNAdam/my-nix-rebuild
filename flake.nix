@@ -46,7 +46,7 @@
 
             # sync git repo
             cd $NIXOS_PATH
-            git commit -a -m "$LABEL"
+            git commit -a --allow-empty -m "$LABEL"
             git push
 
             # rebuild system
