@@ -38,6 +38,9 @@
             # create bootloader compatible label
             SANITIZED_LABEL=$(echo "$LABEL" | sed 's/ /_/g' | sed 's/[^a-zA-Z0-9:_\.-]//g')
 
+            cd $NIXOS_PATH
+            git add .
+
             # check if rebuild will work
             sudo NIXOS_LABEL="$SANITIZED_LABEL" nixos-rebuild dry-activate --impure --flake $NIXOS_PATH#default
 
